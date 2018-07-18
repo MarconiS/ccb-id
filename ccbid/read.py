@@ -135,7 +135,7 @@ def pck(path):
     Returns:
         the object stored in the pickle file
     """
-    with open(path, 'r') as f:
+    with open(path, 'rb') as f:
         return _pickle.load(f)
 
 
