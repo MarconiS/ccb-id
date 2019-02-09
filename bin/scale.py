@@ -26,14 +26,14 @@ sp_labels = model.labels_
 from skimage import io
 features = np.array(io.imread(pt+ainput))
 npix = features.shape
-features = features.flatten().reshape(npix[0]*npix[1], 369)
+features = features.flatten().reshape(npix[0]*npix[1], 369) / 10000
 
 from skimage import io
 features = np.array(io.imread(pt+ainput))
 npix = features.shape
 features = features.flatten().reshape(npix[0]*npix[1], 369)
 
-mask1 = np.all(features < 0, axis=1) | np.all(features > 10000, axis=1)
+mask1 = np.all(features < 0, axis=1) | np.all(features > 1, axis=1)
 data = features[~mask1]
 n_ok = data.shape
 
@@ -53,6 +53,7 @@ output.loc[mask_pca,:] =  prob
 final = pd.DataFrame(index=range(features.shape[0]), columns=range(prob.shape[1]))
 final[~mask1] = output
 
+print(final)
 #get the crown ids from the crown delinetation
 import geopandas as gpd
 import rasterio
@@ -65,7 +66,7 @@ with rasterio.open(pt+ainput) as dataset:
     extent = dataset.transform
     data_crs = dataset.crs
 
-
+print(extent)
 
 from rasterio.transform import from_origin
 final = final.astype(float)
@@ -81,15 +82,10 @@ for ii in range(prob.shape[1]):
     tmp = final[:,:,ii].astype(float)
     new_dataset.write(tmp, ii+1)
 
-
 new_dataset.close()
 
 from rasterstats import zonal_stats
 #get the crown ids from the crown delinetation
-import geopandas as gpd
-import rasterio
-from rasterio import features
-
 itc = gpd.read_file(aitcput)
 itc.crs = data_crs
 
