@@ -135,8 +135,11 @@ def pck(path):
     Returns:
         the object stored in the pickle file
     """
+    #with open(path, 'rb') as f:
+    #    return _pickle.load(f)
+    import pickle
     with open(path, 'rb') as f:
-        return _pickle.load(f)
+        return pickle.load(f, encoding='latin1') 
 
 
 class raster:
