@@ -60,7 +60,7 @@ from rasterio import features
 
 itc = gpd.read_file(aitcput)
 
-#final = final.values.reshape(npix[0], npix[1], final.shape[1])
+final = final.values.reshape(npix[0], npix[1], final.shape[1])
 with rasterio.open(pt+ainput) as dataset:
     extent = dataset.transform
     data_crs = dataset.crs
