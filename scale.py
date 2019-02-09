@@ -108,10 +108,10 @@ for ii in range(prob.shape[1]):
     itc = pd.concat([itc, df_zonal_stats], axis=1)
 
 
-poly_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Sp_poly/" 
+poly_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Sp_shp/" 
 csv_name = poly_out+ainput[:-4]
-#itc.to_file(csv_name+".csv")
-itc.to_csv(csv_name+".csv", index=False) 
+itc.to_file(csv_name+".shp", )
+#itc.to_csv(csv_name+".csv", index=False) 
 
 
 
