@@ -9,7 +9,7 @@ from ccbid import prnt
 
 pt = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Rasters/"
 ainput = "NIS1_20140507_144927_atmcor_CNJRF.tif"
-#aitcput = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/ITCs/"+ainput[:-4]+"_silva.shp"
+aitcput = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/ITCs/"+ainput[:-4]+"_silva.shp"
 ainput = sys.argv[1]
 aremove_outliers = 'PCA'
 athreshold = 3
@@ -60,7 +60,7 @@ from rasterio import features
 
 itc = gpd.read_file(aitcput)
 
-final = final.values.reshape(npix[0], npix[1], final.shape[1])
+#final = final.values.reshape(npix[0], npix[1], final.shape[1])
 with rasterio.open(pt+ainput) as dataset:
     extent = dataset.transform
     data_crs = dataset.crs
