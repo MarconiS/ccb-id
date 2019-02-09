@@ -73,7 +73,7 @@ final = final.astype(float)
 pt_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/SPAnde/"    
 new_dataset = rasterio.open(pt_out+ainput[:-4]+'_sp.tif', 'w', driver='GTiff',
                             height = final.shape[0], width = final.shape[1],
-                            count=prob.shape[1], dtype=str(final.dtype),
+                            count=prob.shape[1], dtype=float,
                             crs=data_crs,
                             transform=extent)
 
