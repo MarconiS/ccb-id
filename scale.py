@@ -112,7 +112,7 @@ poly_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Sp_poly/"
 csv_name = poly_out+ainput[:-4]
 
 outfile = open(csv_name+".csv", 'wb')
-itc.dropna().to_csv(csv_name+".csv", index=False, header = True, sep = ',', encoding = 'utf-8') 
+itc.dropna().to_csv(outfile) 
 outfile.close()
 
 
