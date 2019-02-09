@@ -8,7 +8,7 @@ from ccbid import args
 from ccbid import prnt
 
 pt = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Rasters/"
-ainput = "NIS1_20140507_144927_atmcor_CNJRF.tif"
+ainput = "NIS1_20140507_143910_atmcor_BRTYP.tif"
 aitcput = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/ITCs/"+ainput[:-4]+"_silva.shp"
 ainput = sys.argv[1]
 aremove_outliers = 'PCA'
@@ -28,14 +28,23 @@ features = np.array(io.imread(pt+ainput))
 npix = features.shape
 features = features.flatten().reshape(npix[0]*npix[1], 369)
 
-from skimage import io
-features = np.array(io.imread(pt+ainput))
-npix = features.shape
-features = features.flatten().reshape(npix[0]*npix[1], 369)
 
-mask1 = np.all(features < 0, axis=1) | np.all(features > 10000, axis=1)
-data = features[~mask1] / 10000
-n_ok = data.shape
+#use ndvi and nir masks
+ndvi = (features[:,90] - features[:, 58])/(features[:,58] +features[:,90]) <0.5
+nir860 = (features[:,96] + features[:,97])/2 < 0.4
+naval = ~(ndvi | nir860)
+print(naval.shape)
+mask1 = np.all(features < 0, axis=1) | np.all(features > 1, axis=1) | naval
+data = features[~mask1] 
+
+#np.apply_along_axis(my_func, 0, b)
+normMat = np.apply_along_axis(np.sum, 1, data**2)
+normMat = np.sqrt(normMat)
+normMat = np.tile(normMat, (data.shape[1],1))
+
+data=data / np.transpose(normMat)
+normMat = None
+data.shape
 
 
 mask_pca = ccbid.outliers.with_pca(data, thresh=athreshold)
@@ -80,8 +89,6 @@ new_dataset = rasterio.open(pt_out+ainput[:-4]+'_sp.tif', 'w', driver='GTiff',
 for ii in range(prob.shape[1]):
     tmp = final[:,:,ii].astype(float)
     new_dataset.write(tmp, ii+1)
-
-
 new_dataset.close()
 
 from rasterstats import zonal_stats
