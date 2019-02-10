@@ -77,11 +77,12 @@ itc = gpd.read_file(aitcput)
 itc.crs = data_crs
 
 pt_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/SPAnde/"    
-new_dataset = rasterio.open(pt_out+ainput[:-4]+'_sp.tif', 'w', driver='GTiff',
+fname = pt_out+ainput[:-4]+'_sp.tif'
+new_dataset = rasterio.open(fname, 'w', driver='GTiff',
                             height = final.shape[0], width = final.shape[1],
                             count=prob.shape[1], dtype=str(final.dtype),
-                            crs=data_crs,
-                            transform=extent)
+                            transform=extent,
+                            crs=data_crs)
 
 for ii in range(prob.shape[1]):
     tmp = final[:,:,ii].astype(float)
