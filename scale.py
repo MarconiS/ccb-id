@@ -104,8 +104,7 @@ poly_out = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Sp_poly/"
 csv_name = poly_out+ainput[:-4]
 #itc.to_file(csv_name+".shp")
 
-itc.to_csv(csv_name+".csv", index=False) 
-
+itc.dropna().to_csv(csv_name+".csv", index=False) 
 
 
 
