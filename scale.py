@@ -11,8 +11,8 @@ from ccbid import prnt
 
 pt = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/Rasters/"
 #ainput = "NIS1_20140507_143910_atmcor_BRTYP.tif"
-aitcput = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/ITCs/"+ainput[:-4]+"_silva.shp"
 ainput = sys.argv[1]
+aitcput = "/orange/ewhite/NeonData/2015_Campaign/D03/OSBS/L5/ITCs/"+ainput[:-4]+"_silva.shp"
 aremove_outliers = 'PCA'
 athreshold = 3
 aaggregate = 'average'
