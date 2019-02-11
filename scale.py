@@ -95,7 +95,7 @@ new_dataset.close()
 for ii in range(prob.shape[1]):
     with rasterio.open(pt_out+ainput[:-4]+'_sp.tif') as src:
         affine = src.transform
-        array = src.read(ii+1)
+        array = src.read(ii+1).T
         df_zonal_stats = pd.DataFrame(zonal_stats(itc, array, affine=affine, stats=['mean']))
     # adding statistics back to original GeoDataFrame
     itc = pd.concat([itc, df_zonal_stats], axis=1) 
